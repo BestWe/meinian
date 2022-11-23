@@ -74,4 +74,11 @@ public class TravelGroupController {
         }
         return new Result(true, MessageConstant.DELETE_TRAVELGROUP_SUCCESS);
     }
+
+    @ResponseBody
+    @RequestMapping("/findAll")
+    public Result findAll() {
+        List<TravelGroup> list = travelGroupService.findAll();
+        return new Result(true, MessageConstant.QUERY_TRAVELGROUP_SUCCESS, list);
+    }
 }

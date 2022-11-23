@@ -22,4 +22,6 @@ public interface TravelGroupDao {
     Page<TravelGroup> findPage(String queryString);
 
     List<Integer> findTravelItemIdByTravelGroupId(Integer id);
+
+    List<TravelGroup> findAll();
 }

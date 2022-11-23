@@ -11,6 +11,7 @@
 
 
                    http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <import resource="classpath:spring-redis.xml"></import>
     <mvc:annotation-driven>
         <!--  1.register-defaults=true:告诉Springmvc使用我们配置文件创建的对象,不再自己创建(框架自己创建,是通过无参构造,会使用默认的字符集) -->
         <mvc:message-converters register-defaults="true">

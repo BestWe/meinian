@@ -71,4 +71,9 @@ public class TravelGroupServiceImpl implements TravelGroupService {
         //删除跟团游
         travelGroupDao.deleteTravelGroup(id);
     }
+
+    @Override
+    public List<TravelGroup> findAll() {
+        return travelGroupDao.findAll();
+    }
 }

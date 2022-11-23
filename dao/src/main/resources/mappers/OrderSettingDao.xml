@@ -2,7 +2,35 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="">
-    <select id="" resultType="">
-     </select>
+<mapper namespace="com.atguigu.dao.OrderSettingDao">
+    <sql id="columns">
+        id,orderDate,number,reservations
+    </sql>
+    <!--    Long findCountByOrderDate(Date orderDate);-->
+    <select id="findCountByOrderDate" parameterType="OrderSetting" resultType="long">
+        select count(0)
+        from t_ordersetting
+        where orderDate = #{orderDateString}
+    </select>
+    <!--    void add(OrderSetting orderSetting);-->
+    <insert id="add" parameterType="OrderSetting">
+        insert into t_ordersetting(orderDate, number, reservations) value (#{orderDate}, #{number}, #{reservations})
+    </insert>
+    <!--    void edit(OrderSetting orderSetting);-->
+    <update id="edit" parameterType="OrderSetting">
+        update t_ordersetting
+        set number=#{number}
+        where orderDate = #{orderDate}
+    </update>
+    <!--    List<OrderSetting> findOrderSetting(Date dateBegin, Date dateEnd);-->
+    <select id="findOrderSetting" parameterType="map" resultType="OrderSetting">
+        select <include refid="columns"></include> from t_ordersetting where orderDate between #{dateBegin} and
+        #{dateEnd}
+    </select>
+    <!--    void editNumberByOrderDate(OrderSetting orderSetting);-->
+    <update id="editNumberByOrderDate" parameterType="OrderSetting">
+        update t_ordersetting
+        set number =#{number}
+        where orderDate = #{orderDateString}
+    </update>
 </mapper>

@@ -50,9 +50,6 @@
             <if test="attention!=null and attention!=''">
                 attention=#{attention},
             </if>
-            <if test="code!=null and code!=''">
-                code=#{code},
-            </if>
         </set>
         where id=#{id}
     </update>
@@ -76,5 +73,9 @@
         select travelitem_id
         from t_travelgroup_travelitem
         where travelgroup_id = #{id}
+    </select>
+    <!--    List<TravelGroup> findAll();-->
+    <select id="findAll" resultType="TravelGroup">
+        select <include refid="columns"></include> from t_travelgroup
     </select>
 </mapper>

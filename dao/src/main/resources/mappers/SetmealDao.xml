@@ -2,7 +2,80 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="">
-    <select id="" resultType="">
-     </select>
+<mapper namespace="com.atguigu.dao.SetmealDao">
+    <sql id="columns">
+        id, name, code, helpCode, sex, age, price, remark, attention, img
+    </sql>
+    <!--    void addSetmeal(Setmeal setmeal);-->
+    <insert id="addSetmeal" parameterType="Setmeal" useGeneratedKeys="true" keyProperty="id">
+        insert into t_setmeal (name, code, helpCode, sex, age, price, remark, attention,
+                               img)
+            value (#{name}, #{code}, #{helpCode}, #{sex}, #{age}, #{price}, #{remark}, #{attention}, #{img})
+    </insert>
+    <!--    void addSetmealRelationTravelGroup(Map<String, Integer> map);-->
+    <insert id="addSetmealRelationTravelGroup" parameterType="map">
+        insert into t_setmeal_travelgroup(setmeal_id, travelgroup_id) value (#{setmealId}, #{travelgroupId})
+    </insert>
+    <!--    void removeSetmeal(Integer id);-->
+    <delete id="removeSetmeal">
+        delete
+        from t_setmeal
+        where id = #{id}
+    </delete>
+    <!--    void removeSetmealRelationTravelGroup(Integer setmealId);-->
+    <delete id="removeSetmealRelationTravelGroup">
+        delete
+        from t_setmeal_travelgroup
+        where setmeal_id = #{setmealId}
+    </delete>
+    <!--    void updateSetmeal(Setmeal setmeal);-->
+    <update id="updateSetmeal">
+        update t_setmeal
+        <set>
+            <if test="name!=null and name!=''">
+                name=#{name},
+            </if>
+            <if test="code!=null and code!=''">
+                code=#{code},
+            </if>
+            <if test="helpCode!=null and helpCode!=''">
+                helpCode=#{helpCode},
+            </if>
+            <if test="sex!=null and sex!=''">
+                sex=#{sex},
+            </if>
+            <if test="age!=null and age!=''">
+                age=#{age},
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark=#{remark},
+            </if>
+            <if test="attention!=null and attention!=''">
+                attention=#{attention},
+            </if>
+            <if test="img!=null and img!=''">
+                img=#{img},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <!--    Setmeal findById(Integer id);-->
+    <select id="findById" parameterType="int">
+        select <include refid="columns"></include> from t_setmeal where id=#{id}
+    </select>
+    <!--    Page<Setmeal> findPage(String queryString);-->
+    <select id="findPage" resultType="Setmeal" parameterType="String">
+        select <include refid="columns"></include> from t_setmeal
+        <where>
+            <if test="value!=null and value.length>0">
+                code=#{value} or name like concat('%',#{value},'%') or helpCode=#{value}
+            </if>
+        </where>
+    </select>
+    <!--    List<Integer> findBySetmealIdRelationTravelGroup(Integer id);-->
+    <select id="findBySetmealIdRelationTravelGroup" parameterType="int" resultType="int">
+        select travelgroup_id
+        from t_setmeal_travelgroup
+        where setmeal_id = #{setmealId}
+    </select>
 </mapper>

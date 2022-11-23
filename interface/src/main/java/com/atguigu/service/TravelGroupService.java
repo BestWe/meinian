@@ -19,4 +19,6 @@ public interface TravelGroupService {
     List<Integer> findTravelItemIdByTravelGroupId(Integer id);
 
     void removeTravelGroup(Integer id);
+
+    List<TravelGroup> findAll();
 }
