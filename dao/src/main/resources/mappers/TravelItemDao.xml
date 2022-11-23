@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.TravelItemDao">
+    <sql id="columns">
+        id, code, name, sex, age, price, type, attention, remark
+    </sql>
+    <!--    void addTravelItem(TravelItem item);-->
+    <insert id="addTravelItem" parameterType="TravelItem">
+        insert into t_travelitem(code, name, sex, age, price, type, attention, remark) value
+            (#{code}, #{name}, #{sex}, #{age}, #{price}, #{type}, #{attention}, #{remark})
+    </insert>
+    <!--    Page<TravelItem> findPage(String queryString);-->
+    <select id="findPage" parameterType="string" resultType="TravelItem">
+        select
+        <include refid="columns"></include>
+        from t_travelitem
+        <where>
+            <if test="value !=null and value.length>0">
+                name like "%"#{value}"%" or code =#{value}
+            </if>
+        </where>
+    </select>
+    <!--    void removeTravelItem(String  id);-->
+    <delete id="removeTravelItem">
+        delete
+        from t_travelitem
+        where id = #{id}
+    </delete>
+    <!--    findCountByTravelItemItemId-->
+    <select id="findCountByTravelItemItemId" parameterType="integer" resultType="Long">
+        select count(0)
+        from t_travelgroup_travelitem
+        where travelitem_id = #{id}
+    </select>
+    <!--    TravelItem findById(Integer id);-->
+    <select id="findById" resultType="TravelItem" parameterType="int">
+        select
+        <include refid="columns"></include>
+        from t_travelitem where id=#{id}
+    </select>
+    <!--    updateTravelItem-->
+    <update id="updateTravelItem" parameterType="TravelItem">
+        update t_travelitem
+        <set>
+            <if test="code !=null and code!=''">
+                code=#{code},
+            </if>
+            <if test="name !=null and name!=''">
+                name=#{name},
+            </if>
+            <if test="sex !=null and sex!=''">
+                sex=#{sex},
+            </if>
+            <if test="age !=null and age!=''">
+                age=#{age},
+            </if>
+            <if test="price !=null and price!=''">
+                price=#{price},
+            </if>
+            <if test="type !=null and type!=''">
+                type=#{type},
+            </if>
+            <if test="attention !=null and attention!=''">
+                attention=#{attention},
+            </if>
+            <if test="remark !=null and remark!=''">
+                remark=#{remark},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <!--    List<TravelItem> findAll();-->
+    <select id="findAll" resultType="travelItem">
+        select <include refid="columns"></include> from t_travelitem
+    </select>
+</mapper>

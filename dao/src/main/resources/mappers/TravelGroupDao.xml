@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.TravelGroupDao">
+    <sql id="columns">
+        id, code, name, helpCode, sex, remark, attention
+    </sql>
+    <!--    void addTravelGroup(TravelGroup travelGroup);-->
+    <insert id="addTravelGroup" parameterType="TravelGroup" useGeneratedKeys="true" keyProperty="id">
+        insert into t_travelgroup(code, name, helpCode, sex, remark, attention)
+            value (#{code}, #{name}, #{helpCode}, #{sex}, #{remark}, #{attention})
+    </insert>
+    <!--    void addTravelGroupRelationTravelItem(Map<String,Integer>map);-->
+    <insert id="addTravelGroupRelationTravelItem" parameterType="map">
+        insert into t_travelgroup_travelitem(travelgroup_id, travelitem_id) value (#{travelGroupId}, #{travelItemId})
+    </insert>
+    <!--    void deleteTravelGroup(Integer id);-->
+    <delete id="deleteTravelGroup" parameterType="int">
+        delete
+        from t_travelgroup
+        where id = #{id}
+    </delete>
+    <!--    void deleteTravelGroupRelationTravelItem(Integer id);-->
+    <delete id="deleteTravelGroupRelationTravelItem" parameterType="int">
+        delete
+        from t_travelgroup_travelitem
+        where travelgroup_id = #{id}
+    </delete>
+
+    <!--    void updateTravelGroup(TravelGroup travelGroup);-->
+    <update id="updateTravelGroup" parameterType="TravelGroup">
+        update t_travelgroup
+        <set>
+            <if test="code!=null and code!=''">
+                code=#{code},
+            </if>
+            <if test="name!=null and name!=''">
+                name=#{name},
+            </if>
+            <if test="helpCode!=null and helpCode!=''">
+                helpCode=#{helpCode},
+            </if>
+            <if test="sex!=null and sex!=''">
+                sex=#{sex},
+            </if>
+            <if test="remark!=null and remark!=''">
+                remark=#{remark},
+            </if>
+            <if test="attention!=null and attention!=''">
+                attention=#{attention},
+            </if>
+            <if test="code!=null and code!=''">
+                code=#{code},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <!--    TravelGroup findByTravelGroupId(Integer id);-->
+    <select id="findByTravelGroupId" parameterType="int" resultType="TravelGroup">
+        select <include refid="columns"></include> from t_travelgroup where id=#{id}
+    </select>
+
+    <!--    Page<TravelGroup> findPage(String queryString);-->
+    <select id="findPage" resultType="TravelGroup">
+        select <include refid="columns"></include> from t_travelgroup
+        <where>
+            <if test="value !=null and value.length>0">
+                name like "%"#{value}"%" or code =#{value}
+            </if>
+        </where>
+    </select>
+
+    <!--    Integer findTravelItemIdByTravelGroupId(Integer id);-->
+    <select id="findTravelItemIdByTravelGroupId" resultType="int">
+        select travelitem_id
+        from t_travelgroup_travelitem
+        where travelgroup_id = #{id}
+    </select>
+</mapper>
