@@ -66,4 +66,5 @@ public class MessageConstant {
     public static final String EXPORT_BUSINESS_REPORT_FAIL = "导出运营统计数据失败";
     public static final String GET_SETMEAL_LIST_SUCCESS = "查询套餐列表数据成功";
     public static final String GET_SETMEAL_LIST_FAIL = "查询套餐列表数据失败";
+    public static final String NO_ACCESS = "该操作未授权";
 }

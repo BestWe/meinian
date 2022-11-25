@@ -8,6 +8,7 @@ import com.atguigu.pojo.TravelItem;
 import com.atguigu.service.TravelItemService;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class TravelItemController {
 
     @RequestMapping("/add")
     @ResponseBody
+    @PreAuthorize("hasAuthority('TRAVELITEM_ADD')")
     public Result add(@RequestBody TravelItem travelItem) {
         try {
             travelItemService.addTravelItem(travelItem);
@@ -35,6 +37,7 @@ public class TravelItemController {
 
     @ResponseBody
     @RequestMapping("/findPage")
+    @PreAuthorize("hasAuthority('TRAVELITEM_QUERY')")
     public PageResult findPage(@RequestBody @NonNull QueryPageBean queryPageBean) {
         PageResult page = travelItemService.findPage(queryPageBean.getCurrentPage(), queryPageBean.getPageSize(),
                 queryPageBean.getQueryString());
@@ -43,6 +46,7 @@ public class TravelItemController {
 
     @ResponseBody
     @RequestMapping("/delete")
+    @PreAuthorize("hasAuthority('TRAVELITEM_DELETE')")
     public Result remove(Integer id) {
         try {
             travelItemService.removeTravelItem(id);
@@ -57,6 +61,7 @@ public class TravelItemController {
 
     @ResponseBody
     @RequestMapping("/findById")
+    @PreAuthorize("hasAuthority('TRAVELITEM_QUERY')")
     public Result findById(Integer id) {
         TravelItem travelItem = travelItemService.findByTravelItemId(id);
         return new Result(true, MessageConstant.QUERY_TRAVELITEM_SUCCESS, travelItem);
@@ -64,6 +69,7 @@ public class TravelItemController {
 
     @ResponseBody
     @RequestMapping("/edit")
+    @PreAuthorize("hasAuthority('TRAVELITEM_EDIT')")
     public Result editTravelItem(@RequestBody TravelItem travelItem) {
         try {
             travelItemService.updateTravelItem(travelItem);
@@ -75,6 +81,7 @@ public class TravelItemController {
 
     @ResponseBody
     @RequestMapping("/findAll")
+    @PreAuthorize("hasAuthority('TRAVELITEM_QUERY')")
     public Result findAll() {
         List<TravelItem> list = travelItemService.findAll();
         return new Result(true, MessageConstant.QUERY_TRAVELITEM_SUCCESS, list);

@@ -20,16 +20,6 @@
         <constructor-arg name="port" value="6379" type="int"/>
         <constructor-arg name="timeout" value="5000" type="int"/>
     </bean>
-    <!--    单机配置reids-->
-    <bean id="standaloneConfig" class="org.springframework.data.redis.connection.RedisStandaloneConfiguration">
-        <property name="hostName" value="192.168.195.37"/>
-        <property name="port" value="6379"/>
-        <property name="database" value="0"/>
-    </bean>
-
-    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
-        <constructor-arg name="standaloneConfig" ref="standaloneConfig"/>
-    </bean>
 
 
 </beans>

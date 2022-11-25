@@ -27,6 +27,35 @@
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <!--打包时先排除掉三个文件夹-->
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>static/**/*.woff</exclude>
+                    <exclude>static/**/*.woff2</exclude>
+                    <exclude>static/**/*.ttf</exclude>
+                </excludes>
+                <includes>
+                    <!--如果有其他定义通用文件，需要包含进来-->
+                    <include>*</include>
+                    <include>mappers/*</include>
+                    <include>*.xml</include>
+                    <include>*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <!--这里是关键！ 根据不同的环境，把对应文件夹里的配置文件打包-->
+                <includes>
+                    <include>static/**/*.woff</include>
+                    <include>static/**/*.woff2</include>
+                    <include>static/**/*.ttf</include>
+                </includes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>

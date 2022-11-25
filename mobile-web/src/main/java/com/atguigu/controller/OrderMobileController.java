@@ -5,8 +5,6 @@ import com.atguigu.constant.RedisConstant;
 import com.atguigu.enity.Result;
 import com.atguigu.service.OrderMobileService;
 import com.atguigu.service.OrderService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +16,6 @@ import redis.clients.jedis.JedisPool;
 
 import java.util.Map;
 
-@Api(tags = "订单管理")
 @Controller
 @RequestMapping("/order")
 public class OrderMobileController {
@@ -29,16 +26,7 @@ public class OrderMobileController {
 
     @DubboReference
     private OrderService orderService;
-    @ApiOperation(value = "发送验证码")
-    @ResponseBody
-    @RequestMapping("/send4Order")
-    public Result sendMessage(@RequestParam("telephone") String phone) {
-        String code = orderMobileService.sendMessage(phone);
-        //设置生存时间
-        jedisPool.getResource().setex(phone + RedisConstant.SENDTYPE_ORDER, 5 * 60, code);
-        return new Result(true, MessageConstant.SEND_VALIDATECODE_SUCCESS);
-    }
-    @ApiOperation(value = "新增预约")
+
     @ResponseBody
     @RequestMapping("/submit")
     public Result submitOrder(@RequestBody Map<String, String> map) {
@@ -60,7 +48,7 @@ public class OrderMobileController {
         }
         return result;
     }
-    @ApiOperation(value = "查询预约信息")
+
     @ResponseBody
     @RequestMapping("/findById")
     public Result findById(Integer id) {

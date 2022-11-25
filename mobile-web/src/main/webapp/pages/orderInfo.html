@@ -21,6 +21,16 @@
     <script>
         var id = getUrlParam("id");
         </script>
+    <style type="text/css">
+    .el-dropdown-link {
+        cursor: pointer;
+        color: #409EFF;
+    }
+
+    .el-icon-arrow-down {
+        font-size: 12px;
+    }
+    </style>
 </head>
 
 <body data-spy="scroll" data-target="#myNavbar" data-offset="150">
@@ -29,7 +39,14 @@
         <div class="top-header">
             <span class="f-left"><i class="icon-back" onclick="history.go(-1)"></i></span>
             <span class="center">美年旅游</span>
-            <span class="f-right"><i class="icon-more"></i></span>
+            <el-dropdown class="f-right" placement="bottom-end">
+                <span class=" el-dropdown-link"><i class="icon-more "></i></span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>黄金糕</el-dropdown-item>
+                    <el-dropdown-item>狮子头</el-dropdown-item>
+                    <el-dropdown-item>螺蛳粉</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
         </div>
         <!-- 页面内容 -->
         <div class="contentBox">
@@ -125,7 +142,7 @@
                 }
                 validateCodeButton = $("#validateCodeButton")[0];
                 clock = window.setInterval(doLoop, 1000); //一秒执行一次
-                axios.post("/order/send4Order.do?telephone=" + telephone).then(response => {
+                axios.post("/validateCode/send4Order.do?telephone=" + telephone).then(response => {
                     if (!response.data.flag) {
                         this.$message.error("验证码发送失败，请检查手机号输入是否正确");
                     }

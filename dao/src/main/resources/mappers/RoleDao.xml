@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.RoleDao">
+    <sql id="columns">
+        `id`, `name`, `keyword`, `description`
+    </sql>
+    <resultMap id="queryRoleMap" type="Role">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="keyword" property="keyword"/>
+        <result column="description" property="description"/>
+        <collection property="permissions" column="id" select="com.atguigu.dao.PermissionDao.findPermissionByRoleId"/>
+    </resultMap>
+    <!--    Set<Role> findRoleByUserId(Integer userId);-->
+    <select id="findRoleByUserId" resultMap="queryRoleMap" parameterType="int">
+        select <include refid="columns"></include> from t_role r right join t_user_role ur on r.id=ur.role_id where
+        ur.user_id =#{id}
+    </select>
+</mapper>

@@ -1,13 +1,13 @@
-package com.atguigu.dao;
+package com.atguigu.service;
 
 import com.atguigu.pojo.Member;
 
 import java.util.List;
 
-public interface MemberDao {
+public interface MemberService {
     Member findByTelephone(String phone);
 
     void add(Member newMember);
 
-    Integer findMemberCountByMonth(String list);
+    List<Integer> findMemberCountByMonth(List<String> list);
 }

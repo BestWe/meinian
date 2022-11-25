@@ -14,4 +14,10 @@
     <insert id="add" parameterType="Member" useGeneratedKeys="true" keyProperty="id">
         insert into t_member(name, sex, idCard, phoneNumber, regTime) value (#{name}, #{sex}, #{idCard}, #{phoneNumber}, #{regTime})
     </insert>
+    <!--    Integer findMemberCountByMonth(String list);-->
+    <select id="findMemberCountByMonth" resultType="int" parameterType="string">
+        select count(id)
+        from t_member
+        where regTime &lt;= #{date}
+    </select>
 </mapper>

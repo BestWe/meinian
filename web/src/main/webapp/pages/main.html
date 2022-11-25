@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <!-- 页面meta -->
     <meta charset="utf-8">
@@ -13,7 +14,7 @@
     <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="../css/style.css">
     <style type="text/css">
-    .el-main{
+    .el-main {
         position: absolute;
         top: 70px;
         bottom: 0px;
@@ -23,10 +24,11 @@
     }
     </style>
 </head>
+
 <body class="hold-transition skin-purple sidebar-mini">
     <div id="app">
         <el-container>
-            <el-header  class="main-header" style="height:70px;">
+            <el-header class="main-header" style="height:70px;">
                 <nav class="navbar navbar-static-top" :class=''>
                     <!-- Logo -->
                     <a href="#" class="logo" style="text-align:center">
@@ -37,15 +39,16 @@
                         <el-dropdown class="avatar-container right-menu-item" trigger="click">
                             <div class="avatar-wrapper">
                                 <img src="../img/user2-160x160.jpg" class="user-avatar">
-                                尚硅谷
+                                <!--显示用户名-->
+                                {{username}}
                             </div>
                             <el-dropdown-menu slot="dropdown">
                                 <el-dropdown-item divided>
                                     <span style="display:block;">修改密码</span>
                                 </el-dropdown-item>
                                 <el-dropdown-item divided>
-                                        <span style="display:block;"><a href="">退出</a></span>
-                                    </el-dropdown-item>
+                                    <span style="display:block;"><a href="/logout.do">退出</a></span>
+                                </el-dropdown-item>
                             </el-dropdown-menu>
                         </el-dropdown>
                     </div>
@@ -79,127 +82,131 @@
 <script src="../plugins/elementui/index.js"></script>
 <script src="../js/axios-0.18.0.js"></script>
 <script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/echarts.min.js"></script>
 <script>
-    new Vue({
-        el: '#app',
-        data:{
-            menuList:[
-                {
-                    "path": "1",
-                    "title": "旅行社",
-                    "icon":"fa-dashboard",
+new Vue({
+    el: '#app',
+    data: {
+        menuList: [{
+                "path": "1",
+                "title": "旅行社",
+                "icon": "fa-dashboard",
+                "children": []
+            },
+            {
+                "path": "2",
+                "title": "旅行管理",
+                "icon": "fa-user-md",
+                "children": [{
+                        "path": "/2-1",
+                        "title": "会员档案",
+                        "linkUrl": "member.html",
+                        "children": []
+                    },
+                    {
+                        "path": "/2-2",
+                        "title": "会员信息上传",
+                        "children": []
+                    },
+                    {
+                        "path": "/2-3",
+                        "title": "会员统计",
+                        "linkUrl": "all-item-list.html",
+                        "children": []
+                    },
+                ]
+            },
+            {
+                "path": "3",
+                "title": "旅游后台",
+                "icon": "fa-tty",
+                "children": [{
+                        "path": "/3-1",
+                        "title": "分公司地址",
+                        "linkUrl": "address.html",
+                        "children": []
+                    },
+                    {
+                        "path": "/3-2",
+                        "title": "旅游预约",
+                        "linkUrl": "ordersetting.html",
+                        "children": []
+                    },
+                    {
+                        "path": "/3-3",
+                        "title": "套餐游",
+                        "linkUrl": "setmeal.html",
+                        "children": []
+                    },
+                    {
+                        "path": "/3-4",
+                        "title": "跟团游",
+                        "linkUrl": "travelgroup.html",
+                        "children": []
+                    },
+                    {
+                        "path": "/3-5",
+                        "title": "自由行",
+                        "linkUrl": "travelitem.html",
+                        "children": []
+                    },
+                ]
+            },
+            {
+                "path": "4",
+                "title": "旅游评估",
+                "icon": "fa-stethoscope",
+                "children": [{
+                    "path": "/4-1",
+                    "title": "大家一起游",
+                    "linkUrl": "all-medical-list.html",
                     "children": []
-                },
-                {
-                    "path": "2",
-                    "title": "旅行管理",
-                    "icon":"fa-user-md",
-                    "children": [
-                        {
-                            "path": "/2-1",
-                            "title": "会员档案",
-                            "linkUrl":"member.html",
-                            "children":[]
-                        },
-                        {
-                            "path": "/2-2",
-                            "title": "会员信息上传",
-                            "children":[]
-                        },
-                        {
-                            "path": "/2-3",
-                            "title": "会员统计",
-                            "linkUrl":"all-item-list.html",
-                            "children":[]
-                        },
-                    ]
-                },
-                {
-                    "path": "3",
-                    "title": "旅游后台",
-                    "icon":"fa-tty",
-                    "children": [
-                        {
-                            "path": "/3-1",
-                            "title": "分公司地址",
-                            "linkUrl":"address.html",
-                            "children":[]
-                        },
-                        {
-                            "path": "/3-2",
-                            "title": "旅游预约",
-                            "linkUrl":"ordersetting.html",
-                            "children":[]
-                        },
-                        {
-                            "path": "/3-3",
-                            "title": "套餐游",
-                            "linkUrl":"setmeal.html",
-                            "children":[]
-                        },
-                        {
-                            "path": "/3-4",
-                            "title": "跟团游",
-                            "linkUrl":"travelgroup.html",
-                            "children":[]
-                        },
-                        {
-                            "path": "/3-5",
-                            "title": "自由行",
-                            "linkUrl":"travelitem.html",
-                            "children":[]
-                        },
-                    ]
-                },
-                {
-                    "path": "4",
-                    "title": "旅游评估",
-                    "icon":"fa-stethoscope",
-                    "children":[
-                        {
-                            "path": "/4-1",
-                            "title": "大家一起游",
-                            "linkUrl":"all-medical-list.html",
-                            "children":[]
-                        },
-                    ]
-                },
-                {
-                    "path": "5",     //菜单项所对应的路由路径
-                    "title": "信息系统",     //菜单项名称
-                    "icon":"fa-heartbeat",
-                    "children":[//是否有子菜单，若没有，则为[]
-                        {
-                            "path": "/5-1",
-                            "title": "注册会员按月份数量统计",
-                            "linkUrl":"report_member.html",
-                            "children":[]
-                        },
-                        {
-                            "path": "/5-2",
-                            "title": "预约套餐人数比例统计",
-                            "linkUrl":"report_setmeal.html",
-                            "children":[]
-                        },
-						{
-							"path": "/5-3",
-							"title": "运营数据统计",
-							"linkUrl":"report_business.html",
-							"children":[]
-						}
-                    ]
-                }
-            ],
-            username:null  // 显示用户名
-        },
-		 //发送请求获取当前登录用户的用户名
-		created:function () {
-            //发送请求获取当前登录用户的用户名            
-        }
-    });
-    $(function() {
-		var wd = 200;
-		$(".el-main").css('width', $('body').width() - wd + 'px');
-    });
+                }, ]
+            },
+            {
+                "path": "5", //菜单项所对应的路由路径
+                "title": "信息系统", //菜单项名称
+                "icon": "fa-heartbeat",
+                "children": [ //是否有子菜单，若没有，则为[]
+                    {
+                        "path": "/5-1",
+                        "title": "注册会员按月份数量统计",
+                        "linkUrl": "report_member.html",
+                        "children": []
+                    },
+                    {
+                        "path": "/5-2",
+                        "title": "预约套餐人数比例统计",
+                        "linkUrl": "report_setmeal.html",
+                        "children": []
+                    },
+                    {
+                        "path": "/5-3",
+                        "title": "运营数据统计",
+                        "linkUrl": "report_business.html",
+                        "children": []
+                    }
+                ]
+            }
+        ],
+        username: null // 显示用户名
+    },
+    //发送请求获取当前登录用户的用户名
+    created: function() {
+        //发送请求获取当前登录用户的用户名  
+        axios.get("/user/getUsername.do").then((response) => {
+            if (response.data.flag) {
+                this.username = response.data.data.username;
+            }
+        }).catch((error) => {
+            this.$message.error("获取用户名失败");
+        })
+    }
+});
+$(function() {
+    var wd = 200;
+    $(".el-main").css('width', $('body').width() - wd + 'px');
+});
 </script>
+
 </html>
