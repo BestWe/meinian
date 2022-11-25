@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.dao.OrderDao">
+    <sql id="columns">
+        id,member_id, orderDate, orderType, orderStatus, setmeal_id
+    </sql>
+    <!--    List<Order> findByCondition(Order order);-->
+    <select id="findByCondition" resultType="Order">
+        select <include refid="columns"></include> from t_order
+        <where>
+            <if test="memberId!=null and memberId !=''">
+                and member_id=#{memberId}
+            </if>
+            <if test="orderDateString!=null and orderDateString !=''">
+                and orderDate=#{orderDateString}
+            </if>
+            <if test="orderType!=null and orderType !=''">
+                and orderType=#{orderType}
+            </if>
+            <if test="orderStatus!=null and orderStatus !=''">
+                and orderStatus=#{orderStatus}
+            </if>
+            <if test="setmealId!=null and setmealId !=''">
+                and setmeal_id=#{setmealId}
+            </if>
+        </where>
+    </select>
+    <!--    void add(Order order);-->
+    <insert id="add" parameterType="Order" useGeneratedKeys="true" keyProperty="id">
+        insert into t_order (member_id, orderDate, orderType, orderStatus, setmeal_id)
+            value (#{memberId}, #{orderDateString}, #{orderType}, #{orderStatus}, #{setmealId})
+    </insert>
+    <!--    Order findById(Integer id);-->
+    <select id="findById" parameterType="int" resultType="Order">
+        select <include refid="columns"></include> from t_order where id=#{id}
+    </select>
+    <!--    Map findById4Detail(Integer id);-->
+    <select id="findById4Detail" resultType="map" parameterType="int">
+        SELECT m.`name`    as 'member',
+               s.`name`    as 'setmeal',
+               o.orderDate as 'orderDate',
+               o.orderType as 'orderType'
+        FROM t_order o
+                 LEFT JOIN t_member m ON o.member_id = m.id
+                 LEFT JOIN t_setmeal s ON o.setmeal_id = s.id
+        WHERE o.id = #{id}
+    </select>
+</mapper>
