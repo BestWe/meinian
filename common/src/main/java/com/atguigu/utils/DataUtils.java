@@ -1,5 +1,8 @@
 package com.atguigu.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -67,5 +70,11 @@ public class DataUtils {
         list[0] = date + "-01";
         list[1] = date + "-" + String.valueOf(monthDay);
         return list;
+    }
+
+    public static Date parseString2Date(String date) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date parse = sdf.parse(date);
+        return parse;
     }
 }

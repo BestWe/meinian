@@ -1,6 +1,8 @@
 package com.atguigu.pojo;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -23,6 +25,16 @@ public class Order implements Serializable{
 
     public Order(Integer id) {
         this.id = id;
+    }
+
+    public String getOrderDateString() {
+        Date date = this.getOrderDate();
+        if(null == date) {
+            return "";
+        }
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = df.format(date);
+        return dateString;
     }
 
     public Order(Integer memberId, Date orderDate, String orderType, String orderStatus, Integer setmealId) {

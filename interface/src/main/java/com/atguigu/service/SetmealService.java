@@ -23,4 +23,6 @@ public interface SetmealService {
 
     List<Integer> findBySetmealIdRelationTravelGroup(Integer id);
 
+    List<Setmeal> findAll();
+
 }

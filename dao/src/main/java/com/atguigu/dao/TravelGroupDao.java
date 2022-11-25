@@ -24,4 +24,6 @@ public interface TravelGroupDao {
     List<Integer> findTravelItemIdByTravelGroupId(Integer id);
 
     List<TravelGroup> findAll();
+
+    List<TravelGroup> findTravelGroupListById();
 }

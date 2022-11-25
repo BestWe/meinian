@@ -1,6 +1,8 @@
 package com.atguigu.service.impl;
 
 import com.atguigu.dao.SetmealDao;
+import com.atguigu.dao.TravelGroupDao;
+import com.atguigu.dao.TravelItemDao;
 import com.atguigu.enity.PageResult;
 import com.atguigu.pojo.Setmeal;
 import com.atguigu.service.SetmealService;
@@ -19,6 +21,10 @@ import java.util.Map;
 public class SetmealServiceImpl implements SetmealService {
     @Autowired
     private SetmealDao setmealDao;
+    @Autowired
+    private TravelGroupDao travelGroupDao;
+    @Autowired
+    private TravelItemDao travelItemDao;
 
     @Override
     public void add(Setmeal setmeal) {
@@ -62,11 +68,18 @@ public class SetmealServiceImpl implements SetmealService {
 
     @Override
     public Setmeal findBySetmealId(Integer id) {
-        return setmealDao.findById(id);
+//        Setmeal setmeal = setmealDao.findDetailsById(id);
+        Setmeal setmeal = setmealDao.find2ById(id);
+        return setmeal;
     }
 
     @Override
     public List<Integer> findBySetmealIdRelationTravelGroup(Integer id) {
         return setmealDao.findBySetmealIdRelationTravelGroup(id);
+    }
+
+    @Override
+    public List<Setmeal> findAll() {
+        return setmealDao.findAll();
     }
 }

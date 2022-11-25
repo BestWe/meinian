@@ -16,6 +16,7 @@
         <module>service</module>
         <module>web</module>
         <module>jobs</module>
+        <module>mobile-web</module>
     </modules>
 
     <properties>
@@ -39,10 +40,14 @@
         <jedis.version>2.9.0</jedis.version>
         <quartz.version>2.2.1</quartz.version>
         <slf4j-version>1.7.30</slf4j-version>
+        <httpclient-version>5.2</httpclient-version>
+        <common-lang-version>2.6</common-lang-version>
+        <httpcomponents-version>4.2.1</httpcomponents-version>
+        <spring-data-redis>2.7.5</spring-data-redis>
     </properties>
-
     <!-- 依赖管理标签  必须加 -->
     <dependencyManagement>
+
         <dependencies>
             <!-- Spring -->
             <dependency>
@@ -268,6 +273,45 @@
                 <artifactId>slf4j-log4j12</artifactId>
                 <version>${slf4j-version}</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents.client5/httpclient5 -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpcore</artifactId>
+                <version>${httpcomponents-version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${common-lang-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpcomponents-version}</version>
+            </dependency>
+
+            <!--阿里云服务器短信平台-->
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-core</artifactId>
+                <version>3.3.1</version>
+            </dependency>
+            <dependency>
+                <groupId>com.aliyun</groupId>
+                <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>${spring-data-redis}</version>
+            </dependency>
+
+
+
         </dependencies>
     </dependencyManagement>
     <dependencies>

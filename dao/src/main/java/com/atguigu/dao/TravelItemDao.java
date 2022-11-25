@@ -56,4 +56,6 @@ public interface TravelItemDao {
      */
     List<TravelItem> findAll();
 
+    List<TravelItem> findTravelItemListById();
+
 }

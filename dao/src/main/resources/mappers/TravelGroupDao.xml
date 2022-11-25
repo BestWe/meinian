@@ -78,4 +78,25 @@
     <select id="findAll" resultType="TravelGroup">
         select <include refid="columns"></include> from t_travelgroup
     </select>
+
+    <!--    List<TravelGroup> findTravelGroupListById();-->
+    <resultMap type="travelGroup" id="findByIdResultMap">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+        <collection property="travelItems" column="id" select="com.atguigu.dao.TravelItemDao.findTravelItemListById">
+        </collection>
+    </resultMap>
+
+    <!--根据套餐id查询自由行信息-->
+    <select id="findTravelGroupListById" resultMap="findByIdResultMap" parameterType="int">
+        select *
+        from t_travelgroup
+        where id in (select travelgroup_id from t_setmeal_travelgroup where setmeal_id = #{id})
+    </select>
+
 </mapper>

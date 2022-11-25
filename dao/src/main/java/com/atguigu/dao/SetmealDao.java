@@ -19,7 +19,13 @@ public interface SetmealDao {
 
     Setmeal findById(Integer id);
 
+    Setmeal find2ById(Integer id);
+
     Page<Setmeal> findPage(String queryString);
 
     List<Integer> findBySetmealIdRelationTravelGroup(Integer id);
+
+    List<Setmeal> findAll();
+
+    Setmeal findDetailsById(Integer id);
 }

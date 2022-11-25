@@ -3,6 +3,52 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.atguigu.dao.SetmealDao">
+    <resultMap id="querySetmealDetail" type="Setmeal">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result column="code" property="code"></result>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="price" property="price"/>
+        <result column="remark" property="remark"/>
+        <result property="attention" column="attention"/>
+        <result column="img" property="img"/>
+        <collection property="travelGroups" ofType="TravelGroup">
+            <id column="gid" property="id"></id>
+            <result column="gcode" property="code"></result>
+            <result column="gname" property="name"/>
+            <result column="ghelpcode" property="helpCode"/>
+            <result column="gsex" property="sex"/>
+            <result column="gremark" property="remark"/>
+            <result column="gattention" property="attention"/>
+            <collection property="travelItems" ofType="TravelItem">
+                <id column="iid" property="id"></id>
+                <result column="icode" property="code"></result>
+                <result column="iname" property="name"/>
+                <result column="isex" property="sex"/>
+                <result column="iprice" property="price"/>
+                <result column="iage" property="age"/>
+                <result column="itype" property="type"/>
+                <result column="iattention" property="attention"/>
+                <result column="iremake" property="remark"/>
+            </collection>
+        </collection>
+    </resultMap>
+    <resultMap type="setmeal" id="findByIdResultMap">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="helpCode" property="helpCode"/>
+        <result column="sex" property="sex"/>
+        <result column="age" property="age"/>
+        <result column="price" property="price"/>
+        <result column="remark" property="remark"/>
+        <result column="attention" property="attention"/>
+        <result column="img" property="img"/>
+        <collection property="travelGroups" column="id" select="com.atguigu.dao.TravelGroupDao.findTravelGroupListById">
+        </collection>
+    </resultMap>
     <sql id="columns">
         id, name, code, helpCode, sex, age, price, remark, attention, img
     </sql>
@@ -60,7 +106,7 @@
         where id=#{id}
     </update>
     <!--    Setmeal findById(Integer id);-->
-    <select id="findById" parameterType="int">
+    <select id="findById" parameterType="int" resultType="Setmeal">
         select <include refid="columns"></include> from t_setmeal where id=#{id}
     </select>
     <!--    Page<Setmeal> findPage(String queryString);-->
@@ -78,4 +124,49 @@
         from t_setmeal_travelgroup
         where setmeal_id = #{setmealId}
     </select>
+
+    <!--    List<Setmeal> findAll();-->
+    <select id="findAll" resultType="Setmeal">
+        select <include refid="columns"></include> from t_setmeal
+    </select>
+    <!--    Setmeal findDetailsById(Integer id);-->
+    <select id="findDetailsById" resultMap="querySetmealDetail" parameterType="int">
+        SELECT s.id,
+               s.`name`,
+               s.`code`,
+               s.helpCode,
+               s.sex,
+               s.age,
+               s.price,
+               s.remark,
+               s.attention,
+               s.img,
+               tg.id        gid,
+               tg.`code`    gcode,
+               tg.`name`    gname,
+               tg.helpCode  ghelpcode,
+               tg.sex       gsex,
+               tg.remark    gremak,
+               tg.attention gattention,
+               ti.id        iid,
+               ti.`code`    icode,
+               ti.`name`    iname,
+               ti.sex       isex,
+               ti.price     iprice,
+               ti.age       iage,
+               ti.type      itype,
+               ti.attention iattention,
+               ti.remark    iremake
+        FROM t_setmeal s
+                 LEFT JOIN t_setmeal_travelgroup stg ON s.id = stg.setmeal_id
+                 LEFT JOIN t_travelgroup tg ON stg.travelgroup_id = tg.id
+                 LEFT JOIN t_travelgroup_travelitem tgt ON tgt.travelgroup_id = tg.id
+                 LEFT JOIN t_travelitem ti ON ti.id = tgt.travelitem_id
+        WHERE s.id = #{id}
+    </select>
+
+    <select id="find2ById" resultMap="findByIdResultMap" parameterType="int">
+        select * from t_setmeal where id=#{id}
+    </select>
+
 </mapper>

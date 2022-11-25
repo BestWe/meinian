@@ -33,4 +33,14 @@
         set number =#{number}
         where orderDate = #{orderDateString}
     </update>
+    <!--    OrderSetting findOneOrderSetting(String orderDate);-->
+    <select id="findOneOrderSetting" resultType="OrderSetting" parameterType="string">
+        select <include refid="columns"></include> from t_ordersetting where orderDate=#{date}
+    </select>
+    <!--    void editReservationByOrderDate(OrderSetting orderSetting);-->
+    <update id="editReservationByOrderDate" parameterType="OrderSetting">
+        update t_ordersetting
+        set reservations=#{reservations}
+        where id = #{id}
+    </update>
 </mapper>
