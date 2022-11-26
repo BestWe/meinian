@@ -20,4 +20,21 @@
         from t_member
         where regTime &lt;= #{date}
     </select>
+    <!--Integer findMemberCountByDay(String time);-->
+    <select id="findMemberCountByDay" resultType="int" parameterType="string">
+        select count(id)
+        from t_member
+        where regTime = #{date}
+    </select>
+    <!--Integer findMemberCount();-->
+    <select id="findMemberCount" resultType="int" parameterType="string">
+        select count(id)
+        from t_member
+    </select>
+    <!--    Integer findMemberCountByTimes();-->
+    <select id="findMemberCountByTimes" parameterType="string" resultType="int">
+        SELECT count(0)
+        from t_member
+        WHERE regTime BETWEEN #{begin} AND #{end};
+    </select>
 </mapper>

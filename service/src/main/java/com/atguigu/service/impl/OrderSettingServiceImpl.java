@@ -3,7 +3,7 @@ package com.atguigu.service.impl;
 import com.atguigu.dao.OrderSettingDao;
 import com.atguigu.pojo.OrderSetting;
 import com.atguigu.service.OrderSettingService;
-import com.atguigu.utils.DataUtils;
+import com.atguigu.utils.Date2Utils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +33,7 @@ public class OrderSettingServiceImpl implements OrderSettingService {
     @Override
     public List<Map<String, Integer>> findOrderSettingByDate(String orderDate) {
         Map<String, String> paramOrderDate = new HashMap<>();
-        String[] strings = DataUtils.monthOfDaysScope(orderDate);
+        String[] strings = Date2Utils.monthOfDaysScope(orderDate);
         paramOrderDate.put("dateBegin", strings[0]);
         paramOrderDate.put("dateEnd", strings[1]);
         List<OrderSetting> orderSetting = orderSettingDao.findOrderSetting(paramOrderDate);

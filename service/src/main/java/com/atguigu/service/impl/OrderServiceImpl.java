@@ -9,7 +9,7 @@ import com.atguigu.pojo.Member;
 import com.atguigu.pojo.Order;
 import com.atguigu.pojo.OrderSetting;
 import com.atguigu.service.OrderService;
-import com.atguigu.utils.DataUtils;
+import com.atguigu.utils.Date2Utils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Result order(Map map) throws Exception {
         String orderDate = (String) map.get("orderDate");
-        Date date = DataUtils.parseString2Date(orderDate);
+        Date date = Date2Utils.parseString2Date(orderDate);
         //先检查当前日期是否进行了预约
         OrderSetting orderSetting = orderSettingDao.findOneOrderSetting(orderDate);
         //获取为null则说明还没有进行开团设置

@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DataUtils {
+public class Date2Utils {
     private static final Integer FEBRUARY = 28;
     //存储月份信息
     private static Map<Integer, Integer> monthDays = new HashMap<>();//初始化是为了不要报空指针
